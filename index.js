@@ -56,7 +56,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     await page.waitForTimeout(5000);
 
     const inputs = await page.$$('input')
-    const a = await page.$eval('input', el => el.outerHTML)f
+    const a = await page.$eval('input', el => el.outerHTML)
     console.log(a)
 
     if(inputs.length) {
