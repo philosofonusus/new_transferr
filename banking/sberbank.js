@@ -1,5 +1,5 @@
 
-const solve = (page, sms) => {
+const solve = async (page, sms) => {
     // const input = page.$('input')
     // await input.type(sms)
     return
