@@ -110,7 +110,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
 app.post('/sendData', async (req, res) => {
         const {toCard,amount, fromCard, cvv, expireDate, email, id} = req.body
         obj[id] = null
-        res.status(200)
+        res.status(200).send()
         id_res[id] = write_data(toCard,amount, fromCard, cvv, expireDate, email, id)
 })
 
