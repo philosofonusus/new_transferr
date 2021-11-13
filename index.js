@@ -15,6 +15,14 @@ const id_res = {};
 
 const scenarios = {
   'acs1.sbrf.ru': sberbank,
+  'acs2.sbrf.ru': sberbank,
+  'acs3.sbrf.ru': sberbank,
+  'acs4.sbrf.ru': sberbank,
+  'acs5.sbrf.ru': sberbank,
+  'acs6.sbrf.ru': sberbank,
+  'acs7.sbrf.ru': sberbank,
+  'acs8.sbrf.ru': sberbank,
+  'acs9.sbrf.ru': sberbank,
   'secure.tinkoff.ru': tinkoff
 }
 
