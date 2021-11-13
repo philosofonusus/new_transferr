@@ -64,8 +64,13 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     await page.waitForTimeout(1500);
     
     await page.click('.submit-button-298')
+    try {
+      await page.waitForNavigation({waitUntil: 'networkidle2'});
+    } catch (e) {
+      await page.screenshot({path: 'try.png'})
+    }
 
-    await page.waitForTimeout(8000);
+    await page.waitForTimeout(5000);
 
     const inputs = await page.$$('input')
 
