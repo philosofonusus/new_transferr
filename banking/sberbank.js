@@ -1,6 +1,7 @@
 
 const solve = async (page, sms) => {
-    const input = page.$('input')
+    const input = await page.$('input')
+    console.log(input)
     await input.type(sms)
     return
 }
