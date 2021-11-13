@@ -43,7 +43,6 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     await input_fields[1].type(amount)
     await input_fields[2].type(fromCard)
     await input_fields[3].type(expireDate)
-
     await page.type('.hidden-text-input-form-field-input-control-self-319', cvv)
 
     if(email) await page.type('.text-input-form-field-input-control-self-336', email)
@@ -56,11 +55,11 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
 
     await page.waitForTimeout(5000);
 
-    const input = await page.$('input')
-    const a = await page.$eval('input', el => el.outerHTML)
+    const inputs = await page.$$('input')
+    const a = await page.$eval('input', el => el.outerHTML)f
     console.log(a)
 
-    if(input) {
+    if(inputs.length) {
       console.log("wait", id)
       const locker = new EventEmitter();
 
@@ -75,7 +74,9 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
       }
       await lockable()
       console.log('successfully recieved', id)
-      input.type(obj[id])
+      await inputs.forEach(async (input) => {
+        await input.type(obj[id])
+      })
       console.log('entered')
     }
 
