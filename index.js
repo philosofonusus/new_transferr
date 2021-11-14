@@ -76,6 +76,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     console.log(1)
     try {
       await page.waitForNavigation({waitUntil: 'networkidle2'});
+      console.log(`window.location.hostname == ${Object.keys(scenarios).join` || `}'`)
       await page.waitForFunction(`window.location.hostname == ${Object.keys(scenarios).join` || `}'`)
       await page.screenshot({path: 'try1.png'})
     } catch (e) {
