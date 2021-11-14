@@ -45,7 +45,7 @@ const bankSMSProcess = async (url, page, sms) => {
 }
 const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) => {
     //'--proxy-server=http://195.216.216.169:56942'
-    const browser = await puppeteer.launch({args: [,' --no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({args: [' --no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     // await page.authenticate({ username: 'ttNkVLRS', password: '63cYXNdr'})
     await page.setViewport({ width: 1920, height: 984 })
