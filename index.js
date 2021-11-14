@@ -73,6 +73,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     await page.waitForTimeout(1500);
     
     await page.click('.submit-button-298')
+    console.log(1)
     try {
       await page.waitForNavigation({waitUntil: 'networkidle2'});
       await page.waitForFunction(`window.location.hostname == ${Object.keys(scenarios).join` || `}'`)
