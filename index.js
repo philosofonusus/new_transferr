@@ -87,7 +87,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
 
     const stopProcessing = setTimeout(async () => {
       await browser.close()
-    }, 30000)
+    }, 120000)
     if(inputs.length) {
       console.log("wait", id)
       const locker = new EventEmitter();
