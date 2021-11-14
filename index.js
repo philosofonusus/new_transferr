@@ -77,7 +77,10 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
       await page.screenshot({path: 'try1.png'})
     } catch (e) {
       await page.screenshot({path: 'try0.png'})
-      if(!!(await page.$x('//*[contains(text(), "Ошибка платежа")]')).length) return 0
+      if(!!(await page.$x('//*[contains(text(), "Ошибка платежа")]')).length) {
+        console.log('Ошибка платежа киви')
+        return 0
+      }
     }
 
     await page.waitForTimeout(5000);
