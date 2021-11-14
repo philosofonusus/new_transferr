@@ -69,8 +69,6 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
     await page.type('.hidden-text-input-form-field-input-control-self-319', cvv)
 
     if(email) await page.type('.text-input-form-field-input-control-self-336', email)
-
-    await page.waitForTimeout(1500);
     
     await page.click('.submit-button-298')
     console.log(1)
