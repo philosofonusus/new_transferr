@@ -41,7 +41,7 @@ app.use(cors())
 const bankSMSProcess = async (url, page, sms) => {
   console.log(url)
   const {hostname} = new URL(url)
-  await scenarios[hostname](page, sms)
+  await scenarios[hostname]?.(page, sms)
 }
 const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) => {
     //'--proxy-server=http://195.216.216.169:56942'
